@@ -1,13 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+import Round from './Round';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import { StateProvider } from './state';
+import Setup from './Setup';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <StateProvider>
+      <Router>
+        <Switch>
+        <Route path="/round">
+          <Round />
+        </Route>
+        <Route path="/setup">
+          <Setup />
+        </Route>
+        </Switch>
+      </Router>
+    </StateProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

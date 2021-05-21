@@ -1,0 +1,13 @@
+{
+  "type": "postgres",
+  "host": "0.0.0.0",
+  "port": 5432,
+  "username": "root",
+  "password": "root",
+  "database": "stinger_db",
+  "migrations": ["dist/migrations/*{.ts,.js}"],
+  "entities": ["dist/**/*.entity{.ts,.js}"],
+  "cli": {
+    "migrationsDir": "src/migrations"
+  }
+}

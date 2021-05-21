@@ -1,0 +1,7 @@
+export const junglemist = "#b7d8d6"
+export const ocean = "#789E9E"
+export const sark = "#4d6466"
+export const loafer = "#eef3db"
+export const persimon = "#ff607c"
+export const pop = "#8dd4bf"
+export const silver = "#f5f5f5"
