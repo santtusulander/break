@@ -12,5 +12,6 @@ import { Hole } from './hole.entity';
   ],
   providers: [CoursesService],
   controllers: [CoursesController],
+  exports: [CoursesService]
 })
 export class CoursesModule {}

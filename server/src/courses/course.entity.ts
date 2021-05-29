@@ -6,29 +6,13 @@ export class Course {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @PrimaryColumn()
   courseId: string
-
-  @Column()
-  firstName: string;
-
-  @Column()
-  lastName: string;
 
   @Column({ default: true })
   isActive: boolean;
 
   @Column()  
   courseVersion: string;
-
-  @Column()
-  createDate: string;
-
-  @Column()
-  updateDate: string;
-
-  @Column()
-  effectiveDate: string;
 
   @Column()
   courseStatus: string;

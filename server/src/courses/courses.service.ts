@@ -12,15 +12,15 @@ export class CoursesService {
     @InjectRepository(Course)
     private readonly coursesRepository: Repository<Course>,
     @InjectRepository(Hole)
-    private readonly holesRepository: Repository<Course>
+    private readonly holesRepository: Repository<Hole>
     ) {}
 
-  async bulkCreate(createCourseDtos: CreateCourseDto[]): Promise<void> {
+  async bulkCreate(dtos: CreateCourseDto[]): Promise<void> {
 
     const courses: Course[] = []
     const holes: Hole[] = []
 
-    createCourseDtos.forEach(courseDto => {
+    dtos.forEach(courseDto => {
       
       const course = new Course();
 
@@ -29,6 +29,7 @@ export class CoursesService {
       course.courseType = courseDto.courseType;
       course.clubId = courseDto.clubId;
       course.coordinates = courseDto.coordinates;
+      course.courseStatus = courseDto.courseStatus;
       course.courseName = courseDto.courseName;
       course.holesCount = courseDto.holesCount;
 
@@ -51,17 +52,21 @@ export class CoursesService {
         holes.push(hole)  
       })
     })
-    
+    console.log(holes[0])
     await this.holesRepository.save(holes)
-    await this.coursesRepository.save(courses);
+    /* await this.coursesRepository.save(courses); */
   }
 
   async findAll(): Promise<Course[]> {
     return this.coursesRepository.find();
   }
 
-  findOneById(id: string): Promise<Course> {
+  findOneById(id: number): Promise<Course> {
     return this.coursesRepository.findOne(id, {relations: ['holes']});
+  }
+
+  findCourseHoles(courseId: number): Promise<Hole[]> {
+    return this.holesRepository.find({where: {courseId}});
   }
 
   findOneByName(name: string): Promise<Course> {

@@ -1,15 +1,16 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
-import { CreateCoursesDto } from './dto/create-courses.dto';
+import { Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { Course } from './course.entity';
 import { CoursesService } from './courses.service';
+import { CreateCourseDto } from './dto/create-course.dto';
 
 @Controller('courses')
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
   @Post()
-  create(@Body() createCoursesDto: CreateCoursesDto): Promise<void> {
-    return this.coursesService.bulkCreate(createCoursesDto.courses);
+  create(@Body() dtos: CreateCourseDto[]): Promise<void> {
+
+    return this.coursesService.bulkCreate(dtos);
   }
 
   @Get()
@@ -18,7 +19,7 @@ export class CoursesController {
   }
 
   @Get(':id')
-  findOneById(@Param('id') id: string): Promise<Course> {
+  findOneById(@Param('id', ParseIntPipe) id: number): Promise<Course> {
     return this.coursesService.findOneById(id);
   }
 

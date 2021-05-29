@@ -5,6 +5,7 @@ export class CreateCourseDto {
     clubId: string;
     coordinates: string;
     courseName: string;
+    courseStatus: string;
     holesCount: number;
     holeDTOList: {
       holeId: string;
