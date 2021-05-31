@@ -27,6 +27,7 @@ export type Player = {
 
 export interface State {
   round: Round
+  asyncErrors: {status: number, key: string, description: string}[]
 }
 
 export const holes = [
@@ -109,7 +110,8 @@ export const initialState: State = {
     strokeSelectorPristine: true,
     holeSelectorPristine: true,
     playerSelectorPristine: true
-  }
+  },
+  asyncErrors: []
 }
 
 /* UTILITY TYPES */

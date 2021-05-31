@@ -19,7 +19,7 @@ export class CoursesController {
   }
 
   @Get(':id')
-  findOneById(@Param('id', ParseIntPipe) id: number): Promise<Course> {
+  findOneById(@Param('id') id: string): Promise<Course> {
     return this.coursesService.findOneById(id);
   }
 

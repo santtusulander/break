@@ -3,14 +3,12 @@ import { Course } from './course.entity';
 
 @Entity()
 export class Hole {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @ManyToOne(() => Course, course => course.holes)
-  course: Course
 
   @PrimaryColumn()
-  holeId: string
+  id: string
+  
+  @ManyToOne(() => Course, course => course.holes)
+  course: Course
 
   @Column()
   holeStatus: string;

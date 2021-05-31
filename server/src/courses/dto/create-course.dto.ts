@@ -1,5 +1,8 @@
+import { Course } from "../course.entity";
+import { Hole } from "../hole.entity";
+
 export class CreateCourseDto {
-    courseId: string;
+    courseId: Course['id'];
     courseVersion: string;
     courseType: string;
     clubId: string;
@@ -8,7 +11,7 @@ export class CreateCourseDto {
     courseStatus: string;
     holesCount: number;
     holeDTOList: {
-      holeId: string;
+      holeId: Hole['id'];
       holeStatus: string;
       holeUpdateDate: string;
       holeNumber: number;

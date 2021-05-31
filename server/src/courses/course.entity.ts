@@ -1,12 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn, PrimaryColumn, OneToMany } from 'typeorm';
+import { Club } from 'src/clubs/clubs.entity';
+import { Column, Entity, PrimaryGeneratedColumn, PrimaryColumn, OneToMany, Unique, ManyToOne } from 'typeorm';
 import { Hole } from './hole.entity';
 
 @Entity()
 export class Course {
-  @PrimaryGeneratedColumn()
-  id: number;
 
-  courseId: string
+  @PrimaryColumn()
+  id: string
 
   @Column({ default: true })
   isActive: boolean;
@@ -20,8 +20,8 @@ export class Course {
   @Column()
   courseType: string;
 
-  @Column()
-  clubId: string;
+  @ManyToOne(() => Club)
+  club: Club;
 
   @Column()
   coordinates: string;

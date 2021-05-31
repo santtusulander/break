@@ -8,10 +8,10 @@ export class HoleScore {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, player => player.id)
+  @ManyToOne(() => User)
   player: User;
 
-  @ManyToOne(() => Round, round => round.id)
+  @ManyToOne(() => Round)
   round: Round;
 
   @Column()

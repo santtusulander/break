@@ -5,6 +5,7 @@ import { CreateCourseDto } from './dto/create-course.dto';
 import { Course } from './course.entity';
 import { Hole } from './hole.entity';
 import escapeLikeString from 'src/util/escapeLikeString';
+import { Club } from 'src/clubs/clubs.entity';
 
 @Injectable()
 export class CoursesService {
@@ -24,10 +25,10 @@ export class CoursesService {
       
       const course = new Course();
 
-      course.courseId = courseDto.courseId;
+      course.id = courseDto.courseId;
       course.courseVersion = courseDto.courseVersion;
       course.courseType = courseDto.courseType;
-      course.clubId = courseDto.clubId;
+      course.club = {id: courseDto.clubId} as Club;
       course.coordinates = courseDto.coordinates;
       course.courseStatus = courseDto.courseStatus;
       course.courseName = courseDto.courseName;
@@ -39,7 +40,7 @@ export class CoursesService {
 
         const hole = new Hole();
 
-        hole.holeId = holeDto.holeId
+        hole.id = holeDto.holeId
         hole.course = course
         hole.holeStatus = holeDto.holeStatus
         hole.holeUpdateDate = holeDto.holeUpdateDate
@@ -52,20 +53,20 @@ export class CoursesService {
         holes.push(hole)  
       })
     })
-    console.log(holes[0])
+    
+    await this.coursesRepository.save(courses);
     await this.holesRepository.save(holes)
-    /* await this.coursesRepository.save(courses); */
   }
 
   async findAll(): Promise<Course[]> {
     return this.coursesRepository.find();
   }
 
-  findOneById(id: number): Promise<Course> {
+  findOneById(id: string): Promise<Course> {
     return this.coursesRepository.findOne(id, {relations: ['holes']});
   }
 
-  findCourseHoles(courseId: number): Promise<Hole[]> {
+  findCourseHoles(courseId: Course['id']): Promise<Hole[]> {
     return this.holesRepository.find({where: {courseId}});
   }
 

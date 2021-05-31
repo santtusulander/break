@@ -1,7 +1,8 @@
+import { Course } from "src/courses/course.entity";
 import { User } from "src/users/user.entity";
 
 export class CreateRoundDto {
-  courseId: number;
+  courseId: Course['id'];
   players: User['id'][];
   startHole: number;
   endHole: number;

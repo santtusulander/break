@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Axios, { AxiosRequestConfig } from 'axios';
 import './index.css';
 import {
   BrowserRouter as Router,
@@ -11,21 +12,35 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { StateProvider } from './state';
 import Setup from './Setup';
+import Courses from './Courses';
+import { SWRConfig } from 'swr';
+
+Axios.defaults.baseURL = 'http://localhost:3000';
+
+const swrOptions = {
+  dedupingInterval: 120000,  
+  fetcher: (url: string, config?: AxiosRequestConfig) => Axios.get(url, config).then(res => res.data)
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <StateProvider>
-      <Router>
-        <Switch>
-        <Route path="/round">
-          <Round />
-        </Route>
-        <Route path="/setup">
-          <Setup />
-        </Route>
-        </Switch>
-      </Router>
-    </StateProvider>
+    <SWRConfig value={swrOptions}>
+      <StateProvider>
+        <Router>
+          <Switch>
+          <Route path="/courses">
+            <Courses />
+          </Route>
+          <Route path="/round">
+            <Round />
+          </Route>
+          <Route path="/setup">
+            <Setup />
+          </Route>
+          </Switch>
+        </Router>
+      </StateProvider>
+    </SWRConfig>
   </React.StrictMode>,
   document.getElementById('root')
 );

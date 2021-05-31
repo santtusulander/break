@@ -22,6 +22,11 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
+  @Get('/name/:partialName')
+  findOneByName(@Param('partialName') partialName: string): Promise<User[]> {
+    return this.usersService.findByName(partialName);
+  }
+
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.usersService.remove(id);

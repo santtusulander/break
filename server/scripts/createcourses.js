@@ -54,7 +54,7 @@ const courses = Array(1).fill().map(() => ({
     courseVersion: '1.0',
     courseStatus: 'active',
     courseType: 'emmuista',
-    clubId: uuidv4(),
+    clubId: '423hyu423hj-u23ih2t43ji0t32h89-32j4n32iur3b-43y7r4',
     coordinates: '0.12323,0.65543533',
     courseName: courseNames[getRandomInt(0, courseNames.length - 1)],
     holesCount: 18,

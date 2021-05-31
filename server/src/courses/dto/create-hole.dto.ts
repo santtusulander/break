@@ -1,5 +1,7 @@
+import { Hole } from "../hole.entity";
+
 export default class CreateHoleDto {
-  holeId: string;
+  holeId: Hole['id'];
   holeStatus: string;
   holeUpdateDate: string;
   holeNumber: number;
