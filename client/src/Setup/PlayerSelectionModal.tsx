@@ -1,17 +1,48 @@
 import axios from "axios"
 import { useRef, useState } from "react"
-import Card from "../common/Card"
+import styled from "styled-components"
+import * as SC from "./components"
 import Modal from "../common/Modal"
-import { ModalContainer } from "./components"
+import * as Common from "../common/SearchCard"
+import { Button } from "../common/Button"
+import { ReactComponent as Check } from '../common/assets/check.svg';
+import { pop } from "../common/stylevars"
 
-type Props = {visible: boolean}
+type Props = {
+  visible: boolean,
+  addPlayer: (player: any) => any,
+  removePlayer: (id: string) => any,
+  toggleVisible: () => any
+  players: any[]
+}
 
-export default function PlayerSelectionModal({visible}: Props) {
+const LocalModal = styled(Modal)`
+  flex-direction: column;
+  background: rgba(0,0,0,0.95);
+  div {
+    box-shadow: none;
+  }
+
+  > div {
+    width: 92vw;
+    margin: 7px 0;
+    max-height: 35vh;
+    overflow-y: scroll;
+  }
+`
+
+const CheckIcon = styled(Check)`
+  width: 50px;
+  color: ${pop};
+  position: fixed;
+  top: 90vh;
+`
+
+export default function PlayerSelectionModal({visible, toggleVisible, players, addPlayer, removePlayer}: Props) {
 
   const [candidates, setCandidates] = useState<any[]>([])
   const [searchValue, setSearch] = useState('')
   const fetchTimeout = useRef<NodeJS.Timeout | void>()
-
 
   const onChange = (e: any) => {
 
@@ -32,19 +63,49 @@ export default function PlayerSelectionModal({visible}: Props) {
   }
 
   return (
-  <Modal visible={visible}>
-    <ModalContainer>
-      <input value={searchValue} onChange={onChange} />
-      {candidates.map((candidate) => {
+  <LocalModal visible={visible}>
+    <SC.GroupContainer>
+      {players.map((player, i) => {
         return (
-          <div>
-
-          <p>{candidate.fullName}</p>
-          <p>HCP {candidate.hcp}</p>
-          <p>{candidate.clubabbrev}</p>
-          </div>
+          <SC.GroupCell key={`player${i}`}>
+            <SC.PlayerInfo>
+            <p>
+              {player.firstName} {player.lastName}
+            </p>
+            <p>
+              {player.clubabbrev}, HCP {player.hcp}
+            </p>
+            </SC.PlayerInfo>
+            <SC.UndoWing onClick={() => removePlayer(player.id)}>
+              <SC.TrashIcon />
+            </SC.UndoWing>
+          </SC.GroupCell>
         )
       })}
-    </ModalContainer>
-  </Modal>)
+    </SC.GroupContainer>
+    {players.length < 4 &&
+    <>
+    <Common.SearchInputCard>
+      <Common.SearchIconElement />
+      <Common.SearchInput value={searchValue} onChange={onChange} placeholder="Search for players"/>
+    </Common.SearchInputCard>
+    {!!candidates.length && searchValue.length > 2 &&
+      <Common.SearchItemsCard>
+        {[...candidates, ...candidates, ...candidates].map((candidate) => {
+          return (
+            <Common.SearchItemRow onClick={() => addPlayer(candidate)}>
+            <div>
+              <p>{candidate.fullName}</p>
+              <p style={{fontSize: "11px"}}>HCP {candidate.hcp}</p>
+            </div>
+            <p>{candidate.clubabbrev}</p>
+            </Common.SearchItemRow>
+          )
+        })}
+      </Common.SearchItemsCard>
+    }
+    </>
+    }
+    <CheckIcon onClick={toggleVisible}/>
+  </LocalModal>)
 }

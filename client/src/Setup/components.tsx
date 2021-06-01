@@ -9,6 +9,7 @@ import { ReactComponent as Tee } from '../common/assets/tee.svg';
 import { ReactComponent as Trash } from '../common/assets/trash.svg';
 import { ReactComponent as Plus } from '../common/assets/plus.svg';
 import Card from '../common/Card'
+import { SearchInputCard } from "../common/SearchCard";
 
 export const Hero = styled.div`
   overflow: auto;
@@ -42,14 +43,8 @@ export const TeeThumbnail = styled.div`
   box-shadow: 0px 0px 5px #d1d1d1;
 `
 
-export const ModalContainer = styled(Card)`
-  width: 65%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+export const ModalContainer = styled(SearchInputCard)`
   box-shadow: none;
-  justify-content: center;
-  padding: 20px 0;
 `
 
 export const TeeColorButton = styled(PulseButton)`

@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 export default function Courses() {
 
-	const {isValidating, data: courses = []} = useSWRWithState<Course[]>('/courses')
+	const { data: courses = []} = useSWRWithState<Course[]>('/courses')
 
 	const [searchValue, setSearch] = useState('')
 

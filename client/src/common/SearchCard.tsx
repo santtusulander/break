@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { persimon, pop, sark, silver } from '../common/stylevars';
+import { pop, sark, silver } from '../common/stylevars';
 import Card from "../common/Card";
 import { ReactComponent as SearchIcon } from '../common/assets/search.svg';
 
-export const CourseRow = styled.div`
+export const SearchItemRow = styled.div`
   font-weight: 500;
   padding: 7px 10px;
   display: flex;
@@ -16,7 +16,7 @@ export const CourseRow = styled.div`
   }
 `
 
-export const CoursesCard = styled(Card)`
+export const SearchItemsCard = styled(Card)`
 
   div:last-child {
     border: none !important;

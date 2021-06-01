@@ -1,5 +1,5 @@
 import {update, PropertyPath, get} from 'lodash'
-import React, { ReactNode, useContext, useState } from 'react'
+import React, { ReactNode, useContext, useState, useReducer } from 'react'
 
 /* STATE TYPES */
 
@@ -135,25 +135,25 @@ export function useAppState() {
   return useContext(StateContext)
 }
 
+const rootReducer = (state: State, {path, reducer}: {path: PropertyPath | void, reducer: (state: any) => any}) => {
+  
+  const stateToReduce = path ? get(state, path) : {...state}
+  
+  const payload = reducer(stateToReduce)
+
+  const updatedState: State = path ? update({...state}, path, () => payload) : payload
+
+  return updatedState
+}
+
 // State provider, exposing application state and means to easily reduce it anywhere.
 export const StateProvider = ({children}: {children: ReactNode}) => {
 
-  const [state, setState] = useState(initialState)
+  const [state, dispatch] = useReducer(rootReducer, initialState)
 
   // With this, any part of the state is easily reducable with zero boilerplate. Exposed via this provider.
   function reduceState(path: PropertyPath | void, reducer: (state: any) => any) {
-
-
-    return setState((state) => {
-
-      const stateToReduce = path ? {...get(state, path)} : {...state}
-
-      const payload = reducer(stateToReduce)
-
-      const updatedState: State = path ? update({...state}, path, () => payload) : payload
-
-      return updatedState
-    })
+    dispatch({path, reducer})
   }
 
   return (

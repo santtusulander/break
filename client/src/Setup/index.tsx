@@ -1,7 +1,6 @@
 import { omit } from 'lodash'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import {v4} from 'uuid'
 import Modal from '../common/Modal'
 import { pop } from '../common/stylevars'
 
@@ -16,13 +15,15 @@ export default function Setup() {
     firstHole: 1,
     lastHole: 18,
     teeboxWomen: 'red',
-    teeboxMen: 'yellow',
-    playerSelectionVisible: false,
+    teeboxMen: 'yellow'
   })
 
   const history = useHistory()
   const [players, setPlayer] = useState<{[id: string]: {firstName: string, lastName: string, id: string, hcp: number}}>({})
   const [teeModalType, setTeeModal] = useState<void | string>(undefined)
+  const [playerModalVisible, setPlayerModal] = useState<boolean>(false)
+  
+  const playersArray = Object.values(players)
 
   const toggleTeeModal = (teeboxType: string | void) => () => setTeeModal(teeboxType)
   
@@ -37,24 +38,37 @@ export default function Setup() {
     toggleTeeModal()()
   }
   
-  const openPlayerSelection = () => {
-    setState(state => ({...state, playerSelectionVisible: true}))
+  const togglePlayerSelection = () => {
+    setPlayerModal(state => !state)
   }
   
   const removePlayer = (id: string) => {
     setPlayer((state) => omit(state, id))
+  }
+  
+  const addPlayer = (player: any) => {
+    if (playersArray.length >= 4) {
+
+      return
+    }
+
+    setPlayer((state) => ({...state, [player.id]: player}))
   }
 
   const beginRound = () => {
     console.log('Async call, Starting round...')
     history.push('/round')
   }
-  
-  const playersArray = Object.values(players)
 
   return (
     <>
-    <PlayerSelectionModal visible={state.playerSelectionVisible}/>
+    <PlayerSelectionModal
+      toggleVisible={togglePlayerSelection}
+      visible={playerModalVisible}
+      addPlayer={addPlayer}
+      removePlayer={removePlayer}
+      players={playersArray}
+      />
       <SC.Hero>
           <h2>Golf Pirkkala</h2>
           <h4>Vanha kenttä</h4>
@@ -106,7 +120,7 @@ export default function Setup() {
           )
         })}
         {playersArray.length < 4 &&
-          <SC.GroupCell onClick={openPlayerSelection}>
+          <SC.GroupCell onClick={togglePlayerSelection}>
             <SC.PlusIcon />
           </SC.GroupCell>
         }

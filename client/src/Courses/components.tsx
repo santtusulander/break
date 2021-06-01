@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { persimon, pop, sark, silver } from '../common/stylevars';
+import { pop, sark, silver } from '../common/stylevars';
 import Card from "../common/Card";
 import { ReactComponent as SearchIcon } from '../common/assets/search.svg';
 

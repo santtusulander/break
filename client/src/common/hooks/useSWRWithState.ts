@@ -6,9 +6,9 @@ export default function useSWRWithState<Data = any, Error = any>(key: string, co
 
   const res = useSWR([key, config])
 
-  const [, reduceState] = useAppState()
-
-  if (res.error) {
+  const [state, reduceState] = useAppState()
+  console.log('updated')
+  if (res.error && !state.asyncErrors.findIndex((e) => e.key === key)) {
 
     reduceState<State['asyncErrors']>('asyncErrors', (asyncErrors) => ([...asyncErrors, {status: 500, description: 'Oops', key}]))
   }
