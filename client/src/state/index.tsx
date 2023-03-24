@@ -61,7 +61,7 @@ export const players: Player[] = [
   {
     id: "01",
     firstName: "Tim",
-    lastName: "OnValkeamerilaakso",
+    lastName: "Ppa",
     tee: "white",
     handicap: 33,
     hcpRound: false,
@@ -71,7 +71,7 @@ export const players: Player[] = [
   {
     id: "02",
     firstName: "Heikki",
-    lastName: "Mällinen",
+    lastName: "Leikkinen",
     tee: "white",
     handicap: 33,
     hcpRound: false,
@@ -80,7 +80,7 @@ export const players: Player[] = [
   },
   {
     id: "03",
-    firstName: "Pallis-Pekka-Kulleriina",
+    firstName: "Pallis",
     lastName: "Ruokanen",
     tee: "white",
     handicap: 33,
@@ -90,8 +90,8 @@ export const players: Player[] = [
   },
   {
     id: "04",
-    firstName: "Petriina",
-    lastName: "Konstanen",
+    firstName: "Testi",
+    lastName: "Testonen",
     tee: "white",
     handicap: 33,
     hcpRound: false,
